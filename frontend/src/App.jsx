@@ -1,52 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import CityList from './components/CityList/CityList';
+import SearchBox from './components/SearchBox/SearchBox';
 
-const City = ({ city }) => {
-  const { name, countryCode, district, population } = city;
-  return (
-    <li>
-      <p>name: {name}</p>
-      <p>countryCode: {countryCode}</p>
-      <p>district: {district}</p>
-      <p>population: {population}</p>
-    </li>
-  );
-};
-
-function App() {
+function App({ api }) {
   const [cityList, setCityList] = useState([]);
+  const [countryCode, setCountryCode] = useState([]);
+
+  async function fetchData() {
+    const [result, countryCode] = await api.fetchAllCity();
+    setCityList(() => result);
+    setCountryCode(() => countryCode);
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const result = await fetch('/city/all');
-      const rj = await result.json();
-      setCityList(() => rj);
-    }
     fetchData();
   }, []);
+
+  const handleChange = useCallback(
+    async (value) => {
+      const result = await api.fetchCityByCode(value);
+      setCityList(() => result);
+    },
+    [api]
+  );
 
   return (
     <div className='App'>
       <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <ul>
-          {cityList.map((city) => (
-            <City city={city} key={city.id} />
-          ))}
-        </ul>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
+        This is CRUD Test page with Spring-React
       </header>
+      <section className='App-section'>
+        <div className='App-city-search'>
+          <SearchBox countryCode={countryCode} handleChange={handleChange} />
+        </div>
+        <div className='App-city-wrap'>
+          <CityList cityList={cityList} />
+        </div>
+      </section>
+      <footer className='App-footer'>this is footer</footer>
     </div>
   );
 }

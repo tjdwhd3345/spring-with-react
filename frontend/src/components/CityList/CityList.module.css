@@ -1,0 +1,44 @@
+.citywrap {
+  width: 50vw;
+  max-width: 80vw;
+  border-collapse: collapse;
+}
+.citywrap th,
+.citywrap td {
+  padding: 10px 0;
+}
+.cityheader {
+}
+.cityheader th {
+  border: none;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+.citylist td {
+  border: none;
+  border-bottom: 1px solid;
+}
+/* .citywrap {
+  max-width: 80vw;
+}
+
+.citywrap > li {
+  display: flex;
+  justify-content: space-around;
+}
+.citywrap p {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid;
+  margin: 0;
+  padding: 10px 15px;
+}
+.cityheader {
+  font-weight: 600;
+}
+.cityheader p {
+  border-top: 1px solid;
+}
+.citylist {
+
+} */
