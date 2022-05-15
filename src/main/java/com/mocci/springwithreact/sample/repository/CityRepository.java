@@ -19,7 +19,7 @@ public class CityRepository {
   }
 
   public List<City> findAll() {
-    String sql = "select * from city limit 1000";
+    String sql = "select * from city order by countryCode";
 
     RowMapper<City> cityMapper = (rs, rowNum) -> {
       City city = new City();
@@ -35,7 +35,7 @@ public class CityRepository {
   }
 
   public List<City> findByCode(String countryCode) {
-    String sql = "select * from city where countryCode = :countryCode";
+    String sql = "select * from city where countryCode = :countryCode order by name";
     SqlParameterSource param = new MapSqlParameterSource("countryCode", countryCode);
 
     RowMapper<City> cityMapper = (rs, rowNum) -> {
